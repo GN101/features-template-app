@@ -1,0 +1,13 @@
+.Table {
+  background-color: beige;
+  text-align: center;
+  margin: auto;
+}
+.Table tr {
+  font-size: 14px;
+  /* display: flex;
+  flex-direction: row; */
+}
+.Table tr > th {
+  padding: 8px 4px;
+}
