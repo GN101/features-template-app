@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from 'react';
 import axios from 'axios';
 import styles from './WorldDataTable.module.css';
@@ -6,7 +7,8 @@ import defaultCountries from '../../mockedData';
 class WorldDataTable extends Component {
   state = {
     worldCountryList: [],
-    isEditing: false,
+    defaultCountriesList: defaultCountries,
+    selectedRow: '',
   };
 
   componentDidMount() {
@@ -24,46 +26,78 @@ class WorldDataTable extends Component {
     getWorldCountriesData();
   }
 
-  editRowToggle = (id) => {
-    const { isEditing } = this.state;
+  InputChangeHandler = (event, index, targetedTd) => {
+    const { defaultCountriesList } = this.state;
+    const updatedCountriesList = defaultCountriesList;
+    console.log('defaultCountriesList', defaultCountriesList);
+    console.log('id', index);
+    console.log('event', event.target);
 
-    !isEditing
-      ? this.setState({ isEditing: true })
-      : this.setState({ isEditing: false });
+    updatedCountriesList[index][targetedTd] = event.target.value / 100;
+    this.setState({ defaultCountriesList: updatedCountriesList });
+    console.log('updatedCountriesList', updatedCountriesList);
+    console.log('this.state INSIDE HANDLER :::', defaultCountriesList[3]);
   };
 
-  saveRow = () => {};
+  editRowToggle = (id) => {
+    this.setState((prevState) => ({
+      selectedRow: prevState.selectedRow === '' ? id : '',
+    }));
+    // const index = defaultCountriesList.findIndex(
+    //   (country) => country.name === id
+    // );
+    // console.log('id', id);
+    // console.log('index', defaultCountriesList[index]);
+    // const updatedRow = defaultCountriesList[index];
+    // console.log('updatedRow', updatedRow);
+    // updatedRow.name = e.target.value;
+  };
+
+  deleteRow = (countryName) => {
+    const { defaultCountriesList } = this.state;
+    const updatedCountriesList = defaultCountriesList.filter(
+      (row) => row.name !== countryName
+    );
+    console.log('index', countryName);
+    console.log('updatedCountriesList', updatedCountriesList);
+    console.log(`delete row with country name: ${countryName}`);
+    this.setState((prevState) => ({
+      defaultCountriesList: updatedCountriesList,
+    }));
+  };
 
   render() {
-    const { isEditing, worldCountryList } = this.state;
+    const { worldCountryList, defaultCountriesList, selectedRow } = this.state;
     const givenForYourGoalPercentage = 0.01;
     const netMoneySum = 0.9;
 
-    console.log('worldCountryList ::::', worldCountryList);
+    console.log('this.state', this.state);
+    console.log('selectedRow', selectedRow);
 
     const WorldDataRow = worldCountryList.map((country) => {
-      const index = defaultCountries.findIndex(
+      const index = defaultCountriesList.findIndex(
         (defaultCountry) => defaultCountry.name === country.name
       );
-      console.log(defaultCountries[index]);
+      // console.log(defaultCountriesList[index]);
 
-      const averageNetIncome = defaultCountries[
+      const averageNetIncome = defaultCountriesList[
         index
       ]?.averageNetIncome.toFixed();
       const givenForYourGoal = (
-        defaultCountries[index]?.averageNetIncome * givenForYourGoalPercentage
+        defaultCountriesList[index]?.averageNetIncome *
+        givenForYourGoalPercentage
       ).toFixed();
       const proYourGoalPopPercentage =
-        defaultCountries[index]?.proYourGoalPopPercentage;
-      const ageGroup20To64 = defaultCountries[index]?.ageGroup20To64;
+        defaultCountriesList[index]?.proYourGoalPopPercentage;
+      const ageGroup20To64 = defaultCountriesList[index]?.ageGroup20To64;
       const techSavvyPopPercentage =
-        defaultCountries[index]?.techSavvyPopPercentage;
-      const willingToPay = defaultCountries[index]?.willingToPay;
+        defaultCountriesList[index]?.techSavvyPopPercentage;
+      const willingToPay = defaultCountriesList[index]?.willingToPay;
       const finalPopWillingToPayPercentage =
-        defaultCountries[index]?.proYourGoalPopPercentage *
-        defaultCountries[index]?.ageGroup20To64 *
-        defaultCountries[index]?.techSavvyPopPercentage *
-        defaultCountries[index]?.willingToPay;
+        defaultCountriesList[index]?.proYourGoalPopPercentage *
+        defaultCountriesList[index]?.ageGroup20To64 *
+        defaultCountriesList[index]?.techSavvyPopPercentage *
+        defaultCountriesList[index]?.willingToPay;
       const finalPopWillingToPay =
         country.population * finalPopWillingToPayPercentage;
       const finalTotalSum =
@@ -71,52 +105,100 @@ class WorldDataTable extends Component {
 
       return index !== -1 ? (
         <tr key={country.name}>
+          <td>
+            <button
+              type="button"
+              name={country.name}
+              onClick={() => this.editRowToggle(country.name)}
+            >
+              {selectedRow !== country.name ? 'Edit' : 'Save'}
+            </button>
+            <button type="button" onClick={() => this.deleteRow(country.name)}>
+              Delete
+            </button>
+          </td>
           <td>{country.name}</td>
           <td className={styles.Wide}>
-            {country.population.toLocaleString('en-US', {
+            {country.population.toLocaleString({
               maximumFractionDigits: 0,
             })}
           </td>
           <td>{`$${averageNetIncome}`}</td>
           <td>{`$${givenForYourGoal}`}</td>
           <td>
-            {!isEditing ? (
+            {selectedRow !== country.name ? (
               `${proYourGoalPopPercentage * 100}%`
             ) : (
-              <input
-                className={styles.Input}
-                value={`${proYourGoalPopPercentage * 100}%`}
-              />
+              <>
+                <input
+                  key={this.name}
+                  value={`${proYourGoalPopPercentage * 100}`}
+                  onChange={(event) =>
+                    this.InputChangeHandler(
+                      event,
+                      index,
+                      'proYourGoalPopPercentage'
+                    )
+                  }
+                  className={styles.Input}
+                />
+                <span>%</span>
+              </>
             )}
           </td>
           <td>
-            {!isEditing ? (
+            {selectedRow !== country.name ? (
               `${ageGroup20To64 * 100}%`
             ) : (
-              <input
-                className={styles.Input}
-                value={`${ageGroup20To64 * 100}%`}
-              />
+              <>
+                <input
+                  key={defaultCountriesList.ageGroup20To64}
+                  onChange={(event) =>
+                    this.InputChangeHandler(event, index, 'ageGroup20To64')
+                  }
+                  className={styles.Input}
+                  value={`${ageGroup20To64 * 100}`}
+                />
+                <span>%</span>
+              </>
             )}
           </td>
           <td>
-            {!isEditing ? (
+            {selectedRow !== country.name ? (
               `${techSavvyPopPercentage * 100}%`
             ) : (
-              <input
-                className={styles.Input}
-                value={`${techSavvyPopPercentage * 100}%`}
-              />
+              <>
+                <input
+                  key={defaultCountriesList.techSavvyPopPercentage}
+                  onChange={(event) =>
+                    this.InputChangeHandler(
+                      event,
+                      index,
+                      'techSavvyPopPercentage'
+                    )
+                  }
+                  className={styles.Input}
+                  value={`${techSavvyPopPercentage * 100}`}
+                />
+                <span>%</span>
+              </>
             )}
           </td>
           <td>
-            {!isEditing ? (
+            {selectedRow !== country.name ? (
               `${willingToPay * 100}%`
             ) : (
-              <input
-                className={styles.Input}
-                value={`${willingToPay * 100}%`}
-              />
+              <>
+                <input
+                  key={defaultCountriesList.willingToPay}
+                  onChange={(event) =>
+                    this.InputChangeHandler(event, index, 'willingToPay')
+                  }
+                  className={styles.Input}
+                  value={`${willingToPay * 100}`}
+                />
+                <span>%</span>
+              </>
             )}
           </td>
           <td>{`${netMoneySum * 100}%`}</td>
@@ -136,16 +218,6 @@ class WorldDataTable extends Component {
               maximumFractionDigits: 0,
             })}`}</strong>
           </td>
-          <td>
-            <button
-              type="button"
-              name={country.name}
-              onClick={() => this.editRowToggle(country.name)}
-            >
-              {isEditing ? 'Save' : 'Edit'}
-            </button>
-            <button type="button">Delete</button>
-          </td>
         </tr>
       ) : (
         false
@@ -156,7 +228,7 @@ class WorldDataTable extends Component {
       <div>
         <h4 style={{ color: '#f44336' }}>
           % GIVEN FOR YOUR GOAL FUNDING, per month:
-          <input value={` ${givenForYourGoalPercentage * 100}%`} />
+          <span>{` ${givenForYourGoalPercentage * 100}%`}</span>
         </h4>
         <table className={styles.Table}>
           <tbody>
@@ -179,6 +251,10 @@ class WorldDataTable extends Component {
               <th>TOTAL SUM GATHERED, BY NATION, PER YEAR</th>
             </tr>
             {WorldDataRow}
+            <div>
+              <input placeholder="e.g. United States of America" />
+              <span> Add new country</span>
+            </div>
           </tbody>
         </table>
       </div>

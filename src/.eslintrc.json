@@ -77,6 +77,7 @@
     "object-curly-spacing": 1,
     "react/jsx-curly-brace-presence": 1,
     "react/no-unused-state": 1,
-    "prefer-destructuring": 1
+    "prefer-destructuring": 1,
+    "react/jsx-indent": [2, 2]
   }
-} 
+}
