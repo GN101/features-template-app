@@ -426,3 +426,9 @@ class WorldDataTable extends Component {
 }
 
 export default WorldDataTable;
+
+// TODO:
+// 1. user can change % given for your goal --- ✔️
+// 2. prologue text --- meh ❌
+// 3. validate numeric input that have a max of 100 and min of 0 📌
+// 4. replace comma (,) with a dot (.) for decimal numbers (or else they result in NaN) 📌
