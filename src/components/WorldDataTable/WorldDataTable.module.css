@@ -1,6 +1,6 @@
 .Table {
   border: 2px solid gray;
-  background-color: beige;
+  background-color: #d4d4a6;
   text-align: center;
   /* margin-left: auto;
   margin-right: auto; */
@@ -27,7 +27,72 @@ td {
   max-width: 120px;
   min-width: 70px;
 }
+.WideInput {
+  max-width: 45px;
+}
 
 .Input {
   max-width: 29px;
+}
+
+.AddNew {
+  display: flex;
+}
+.AddNew input {
+  width: 70%;
+  flex-grow: 2;
+  flex-basis: 1 1 100px;
+  margin: 8px;
+  padding: 8px;
+  display: inline-block;
+  box-sizing: border-box;
+  min-width: 200px;
+  font-size: 20px;
+  font-weight: 500;
+}
+.AddNew button {
+  width: 80%;
+  margin: 8px 6px;
+  display: inline-block;
+  background-color: #538d53;
+  min-width: 120px;
+  max-width: 250px;
+  box-sizing: border-box;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.AutocompleteList {
+  margin: 4px 10px;
+  border-radius: 6px;
+}
+.AutocompleteListItems {
+  border: 2px solid #795548;
+  max-width: 400px;
+  width: auto;
+  background-color: #8bc34a;
+  padding: 6px 0 6px 20px;
+}
+.InputGivenForYourGoal {
+  margin: 4px 0 0 6px;
+  max-width: 50px;
+}
+.h4_GivenForYourGoal {
+  color: #f44336;
+  margin: 10px 0 6px 10px;
+}
+
+@media (max-width: 414px) {
+  .AddNew {
+    display: flex;
+    flex-direction: column;
+  }
+  .AddNew button {
+    width: 80%;
+    margin: 4px auto 12px;
+  }
+  .AddNew input {
+    width: auto;
+    margin: 8px;
+  }
 }

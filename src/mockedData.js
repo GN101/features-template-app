@@ -1,7 +1,7 @@
 const defaultCountries = [
   {
     name: 'United States of America',
-    averageNetIncome: 3525.23,
+    averageNetIncome: 3525,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.6,
     techSavvyPopPercentage: 0.6,
@@ -9,7 +9,7 @@ const defaultCountries = [
   },
   {
     name: 'Germany',
-    averageNetIncome: 2917.94,
+    averageNetIncome: 2917,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.6,
     techSavvyPopPercentage: 0.6,
@@ -17,7 +17,7 @@ const defaultCountries = [
   },
   {
     name: 'Japan',
-    averageNetIncome: 2752.55,
+    averageNetIncome: 2752,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.6,
     techSavvyPopPercentage: 0.6,
@@ -25,7 +25,7 @@ const defaultCountries = [
   },
   {
     name: 'France',
-    averageNetIncome: 2458.14,
+    averageNetIncome: 2458,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.5,
     techSavvyPopPercentage: 0.6,
@@ -33,7 +33,7 @@ const defaultCountries = [
   },
   {
     name: 'UK',
-    averageNetIncome: 2642.05,
+    averageNetIncome: 2642,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.3,
     techSavvyPopPercentage: 0.6,
@@ -41,7 +41,7 @@ const defaultCountries = [
   },
   {
     name: 'Spain',
-    averageNetIncome: 1594.35,
+    averageNetIncome: 1594,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.4,
     techSavvyPopPercentage: 0.45,
@@ -49,7 +49,7 @@ const defaultCountries = [
   },
   {
     name: 'Canada',
-    averageNetIncome: 2581.49,
+    averageNetIncome: 2581,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.3,
     techSavvyPopPercentage: 0.6,
@@ -57,7 +57,7 @@ const defaultCountries = [
   },
   {
     name: 'Italy',
-    averageNetIncome: 1737.31,
+    averageNetIncome: 1737,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.6,
     techSavvyPopPercentage: 0.5,
@@ -65,31 +65,31 @@ const defaultCountries = [
   },
   {
     name: 'Australia',
-    averageNetIncome: 3766.92,
+    averageNetIncome: 3766,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.5,
     techSavvyPopPercentage: 0.6,
     willingToPay: 0.25,
   },
-  {
-    name: 'Sweden',
-    averageNetIncome: 3023.86,
-    ageGroup20To64: 0.505,
-    proYourGoalPopPercentage: 0.3,
-    techSavvyPopPercentage: 0.6,
-    willingToPay: 0.25,
-  },
-  {
-    name: 'Norway',
-    averageNetIncome: 3530.9,
-    ageGroup20To64: 0.505,
-    proYourGoalPopPercentage: 0.5,
-    techSavvyPopPercentage: 0.6,
-    willingToPay: 0.2,
-  },
+  // {
+  //   name: 'Sweden',
+  //   averageNetIncome: 3023,
+  //   ageGroup20To64: 0.505,
+  //   proYourGoalPopPercentage: 0.3,
+  //   techSavvyPopPercentage: 0.6,
+  //   willingToPay: 0.25,
+  // },
+  // {
+  //   name: 'Norway',
+  //   averageNetIncome: 3530,
+  //   ageGroup20To64: 0.505,
+  //   proYourGoalPopPercentage: 0.5,
+  //   techSavvyPopPercentage: 0.6,
+  //   willingToPay: 0.2,
+  // },
   {
     name: 'Netherlands',
-    averageNetIncome: 3024.07,
+    averageNetIncome: 3024,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.5,
     techSavvyPopPercentage: 0.6,
@@ -97,7 +97,7 @@ const defaultCountries = [
   },
   {
     name: 'Greece',
-    averageNetIncome: 902.46,
+    averageNetIncome: 902,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.6,
     techSavvyPopPercentage: 0.3,
@@ -105,28 +105,28 @@ const defaultCountries = [
   },
   {
     name: 'Poland',
-    averageNetIncome: 878.78,
+    averageNetIncome: 878,
     ageGroup20To64: 0.505,
     proYourGoalPopPercentage: 0.8,
     techSavvyPopPercentage: 0.3,
     willingToPay: 0.05,
   },
-  {
-    name: 'Romania',
-    averageNetIncome: 690.08,
-    ageGroup20To64: 0.505,
-    proYourGoalPopPercentage: 0.8,
-    techSavvyPopPercentage: 0.25,
-    willingToPay: 0.05,
-  },
-  {
-    name: 'Russia',
-    averageNetIncome: 458.7,
-    ageGroup20To64: 0.505,
-    proYourGoalPopPercentage: 0.8,
-    techSavvyPopPercentage: 0.25,
-    willingToPay: 0.05,
-  },
+  // {
+  //   name: 'Romania',
+  //   averageNetIncome: 690,
+  //   ageGroup20To64: 0.505,
+  //   proYourGoalPopPercentage: 0.8,
+  //   techSavvyPopPercentage: 0.25,
+  //   willingToPay: 0.05,
+  // },
+  // {
+  //   name: 'Russia',
+  //   averageNetIncome: 458,
+  //   ageGroup20To64: 0.505,
+  //   proYourGoalPopPercentage: 0.8,
+  //   techSavvyPopPercentage: 0.25,
+  //   willingToPay: 0.05,
+  // },
 ];
 
 export default defaultCountries;
