@@ -6,6 +6,7 @@
   margin-right: auto; */
   box-sizing: border-box;
   width: auto;
+  margin: auto;
 }
 .Table tr {
   font-size: 16px;
@@ -15,6 +16,7 @@
 .Table tr > th,
 td {
   padding: 8px 8px;
+  min-width: 65px;
   max-width: 90px;
 }
 .Table th {
@@ -49,6 +51,7 @@ td {
   min-width: 200px;
   font-size: 20px;
   font-weight: 500;
+  border-radius: 8px;
 }
 .AddNew button {
   width: 80%;
@@ -61,6 +64,7 @@ td {
   padding: 8px;
   font-size: 16px;
   font-weight: 700;
+  border-radius: 8px;
 }
 .AutocompleteList {
   margin: 4px 10px;
@@ -75,11 +79,16 @@ td {
 }
 .InputGivenForYourGoal {
   margin: 4px 0 0 6px;
-  max-width: 50px;
+  min-width: 200px;
+  max-width: 280px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-weight: 700;
 }
-.h4_GivenForYourGoal {
+.H4_GivenForYourGoal {
   color: #f44336;
   margin: 10px 0 6px 10px;
+  text-align: center;
 }
 
 @media (max-width: 414px) {

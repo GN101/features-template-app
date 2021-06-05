@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable no-debugger */
 import React, { Component, createRef } from 'react';
 import axios from 'axios';
@@ -10,7 +11,8 @@ class WorldDataTable extends Component {
     selectedRow: '',
     autocompleteList: [],
     autocompleteValue: '',
-    givenForYourGoalPercentage: 1,
+    givenForYourGoalPercentage: 0.5,
+    yourGoalName: '',
   };
 
   startOfTable = createRef();
@@ -30,20 +32,77 @@ class WorldDataTable extends Component {
     setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
   }
 
+  transformPercentNums = (value, category) => {
+    let upd = value
+      .replace(' ', '')
+      .replace(',', '.')
+      .replace(/[^0-9.]/gim, '')
+      .replace(/\.[.]/gim, '.')
+      .replace();
+    if (/^\.[1-9]{1,2}/gim.test(upd)) {
+      upd = '0'.concat('', value);
+    }
+    if (/^0[0-9]/gim.test(upd) && category === 'givenForYourGoalPercentage') {
+      upd.split('');
+      upd = '0'.concat('.', upd[1]);
+      upd = parseFloat(upd, 10).toFixed(1);
+    }
+    if (/^0[0-9]/gim.test(upd) && category !== 'givenForYourGoalPercentage') {
+      // upd.split('');
+      upd.slice(1, 2);
+      upd = parseFloat(upd, 10).toFixed(1);
+    }
+
+    if (/^\.[0]{1,2}/gim.test(upd) || /^0\.0/gim.test(upd)) {
+      upd = 0;
+    }
+    if (upd.length > 3) {
+      upd.slice(0, 2);
+      upd = parseFloat(upd, 10).toFixed(1);
+    }
+    return upd;
+  };
+
   InputChangeHandler = (event, index, targetedTd) => {
     const { defaultCountriesList } = this.state;
     const updatedCountriesList = defaultCountriesList;
 
     targetedTd !== 'averageNetIncome'
-      ? (updatedCountriesList[index][targetedTd] = event.target.value / 100)
+      ? (updatedCountriesList[index][targetedTd] =
+          this.transformPercentNums(event.target.value) / 100)
       : (updatedCountriesList[index][targetedTd] = event.target.value);
     this.setState({ defaultCountriesList: updatedCountriesList });
   };
 
   givenForYourGoalChangeHandler = (event) => {
-    console.log('event', event.target.value);
     const updatedValue = event.target.value;
-    this.setState({ givenForYourGoalPercentage: updatedValue });
+    const validatedUpdVal = this.transformPercentNums(
+      updatedValue,
+      'givenForYourGoalPercentage'
+    );
+    this.setState({ givenForYourGoalPercentage: validatedUpdVal });
+  };
+
+  yourGoalNameChangeHandler = (event) => {
+    const updatedValue = event.target.value;
+    this.setState({ yourGoalName: updatedValue });
+  };
+
+  onBlurTransformPercentNums = (value) => {
+    if (value < 0.1 || value === '' || /^[0]\.$|^\.$/gim.test(value)) {
+      debugger;
+      this.setState({ givenForYourGoalPercentage: 0.1 });
+    }
+    if (value >= 100) {
+      this.setState({ givenForYourGoalPercentage: 1 });
+    }
+    if (/^[1-9]\.$/gim.test(value)) {
+      debugger;
+      const upd = value.replace('.', '');
+      debugger;
+      this.setState({ givenForYourGoalPercentage: upd });
+    }
+    return false;
   };
 
   editRowToggle = (id) => {
@@ -169,10 +228,6 @@ class WorldDataTable extends Component {
     );
   };
 
-  validatePercentNums = () => {
-    console.log('test');
-  };
-
   render() {
     const {
       worldCountryList,
@@ -180,6 +235,7 @@ class WorldDataTable extends Component {
       selectedRow,
       autocompleteValue,
       givenForYourGoalPercentage,
+      yourGoalName,
     } = this.state;
     const netMoneySum = 0.9;
 
@@ -229,6 +285,7 @@ class WorldDataTable extends Component {
               <>
                 <span>$</span>
                 <input
+                  autoFocus
                   key={this.name}
                   value={`${averageNetIncome}`}
                   onChange={(event) =>
@@ -362,16 +419,28 @@ class WorldDataTable extends Component {
 
     return (
       <div>
-        <h4 className={styles.h4_givenForYourGoal}>
-          % GIVEN FOR YOUR GOAL FUNDING, per month:
-          {/* <span>{` ${givenForYourGoalPercentage * 100}`}</span> */}
+        <h4 className={styles.H4_GivenForYourGoal}>
+          {`% FUNDING GIVEN FOR ${yourGoalName}, per month: `}
           <input
-            className={styles.InputgivenForYourGoal}
-            type="number"
-            placeholder="e.g. United States of America"
+            className={styles.InputGivenForYourGoal}
             value={givenForYourGoalPercentage}
             onChange={(event) => {
               this.givenForYourGoalChangeHandler(event);
+            }}
+            onBlur={() =>
+              this.onBlurTransformPercentNums(givenForYourGoalPercentage)
+            }
+          />
+          <span> %</span>
+        </h4>
+        <h4 className={styles.H4_GivenForYourGoal}>
+          YOUR GOAL:{' '}
+          <input
+            className={styles.InputGivenForYourGoal}
+            value={yourGoalName}
+            placeholder="Build my own space colony"
+            onChange={(event) => {
+              this.yourGoalNameChangeHandler(event);
             }}
           />
           <span> %</span>
@@ -384,13 +453,15 @@ class WorldDataTable extends Component {
                 <th>Population</th>
                 <th>Average Monthly Net Income</th>
                 <th>
-                  {givenForYourGoalPercentage}% OF INCOME GIVEN FOR YOUR GOAL
+                  {`${givenForYourGoalPercentage}% OF INCOME GIVEN FOR ${yourGoalName}`}
                 </th>
-                <th>PRO YOUR GOAL POP</th>
+                <th>{`PRO ${yourGoalName} POP`}</th>
                 <th>20-60 AGE GROUP %</th>
                 <th>POP BEING TECH SAVVY</th>
-                <th>WILLING TO PAY FOR YOUR GOAL</th>
-                <th>% FINAL DONATION GOING TO CREATORS (REMOVING FEES, ETC)</th>
+                <th>{`WILLING TO PAY FOR ${yourGoalName}`}</th>
+                <th>
+                  {`% FINAL DONATION GOING TOWARD ${yourGoalName} (REMOVING FEES, ETC)`}
+                </th>
                 <th>FINAL % OF TOTAL POP WILLING TO PAY</th>
                 <th>FINAL POP WILLING TO PAY</th>
                 <th>TOTAL SUM GATHERED, BY NATION, PER MONTH</th>
@@ -428,7 +499,7 @@ class WorldDataTable extends Component {
 export default WorldDataTable;
 
 // TODO:
-// 1. user can change % given for your goal --- ✔️
+// 1. user can change % given for your goal ✔️
 // 2. prologue text --- meh ❌
-// 3. validate numeric input that have a max of 100 and min of 0 📌
-// 4. replace comma (,) with a dot (.) for decimal numbers (or else they result in NaN) 📌
+// 3. validate numeric input that have a max of 100 and min of 0 ✔️
+// 4. replace comma (,) with a dot (.) for decimal numbers (or else they result in NaN) ✔️
