@@ -420,7 +420,9 @@ class WorldDataTable extends Component {
     return (
       <div>
         <h4 className={styles.H4_GivenForYourGoal}>
-          {`% FUNDING GIVEN FOR ${yourGoalName}, per month: `}
+          {`% FUNDING GIVEN FOR ${
+            yourGoalName !== '' ? yourGoalName : 'YOUR GOAL'
+          }, per month: `}
           <input
             className={styles.InputGivenForYourGoal}
             value={givenForYourGoalPercentage}
@@ -453,14 +455,22 @@ class WorldDataTable extends Component {
                 <th>Population</th>
                 <th>Average Monthly Net Income</th>
                 <th>
-                  {`${givenForYourGoalPercentage}% OF INCOME GIVEN FOR ${yourGoalName}`}
+                  {`${givenForYourGoalPercentage}% OF INCOME GIVEN FOR ${
+                    yourGoalName !== '' ? yourGoalName : `YOUR GOAL`
+                  }`}
                 </th>
-                <th>{`PRO ${yourGoalName} POP`}</th>
+                <th>{`PRO ${
+                  yourGoalName !== '' ? yourGoalName : `YOUR GOAL`
+                } POP`}</th>
                 <th>20-60 AGE GROUP %</th>
                 <th>POP BEING TECH SAVVY</th>
-                <th>{`WILLING TO PAY FOR ${yourGoalName}`}</th>
+                <th>{`WILLING TO PAY FOR ${
+                  yourGoalName !== '' ? yourGoalName : `YOUR GOAL`
+                }`}</th>
                 <th>
-                  {`% FINAL DONATION GOING TOWARD ${yourGoalName} (REMOVING FEES, ETC)`}
+                  {`% FINAL DONATION GOING TOWARD ${
+                    yourGoalName !== '' ? yourGoalName : `YOUR GOAL`
+                  } (REMOVING FEES, ETC)`}
                 </th>
                 <th>FINAL % OF TOTAL POP WILLING TO PAY</th>
                 <th>FINAL POP WILLING TO PAY</th>
