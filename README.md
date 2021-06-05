@@ -4,7 +4,7 @@ Features so far:
 
 # "Fund your goal" table-app
 
-### URL: https://table-funding.netlify.app/
+### URL: https://crowd-funding-magic.netlify.app/
 
 features:
 
