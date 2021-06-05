@@ -2,7 +2,9 @@ This is a "template" app that I intend to drop any features I develop in other p
 
 Features so far:
 
-### "Fund your goal" table-app
+# "Fund your goal" table-app
+
+### URL: https://table-funding.netlify.app/
 
 features:
 
@@ -11,7 +13,7 @@ features:
 3.  Edit / Delete rows.
 4.  dynamic numeric input validation (transformPercentNums(), onBlurTransformPercentNums() )
 
-# Probable future features:
+### Probable future features:
 
 1. I'll probably enhance the autocomplete functionality to allow arrow key button strokes to select the desired country result
    If you have any suggestions for any feature additions / enhancements, let me know and I'll try to implement it (assuming I find it interesting)
